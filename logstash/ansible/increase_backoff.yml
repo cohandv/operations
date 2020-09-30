@@ -1,7 +1,7 @@
 - hosts: all
   gather_facts: no
   tasks:
-  - name: example copying file with owner and permissions
+  - name: override backoff
     copy:
       src: files/2-filter-99-sleep
       dest: /usr/lib/buddy/logstash/app/conf.d/
