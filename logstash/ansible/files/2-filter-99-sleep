@@ -1,0 +1,9 @@
+# 2020-06-03 Adding a sleep because:
+# commerce infra is running a batch job in debug to find a kitting error. This causes sumo to throttle, which causes logstash to lock
+
+filter {
+  sleep {
+    time => "180"
+    every => 50001
+  }
+}
