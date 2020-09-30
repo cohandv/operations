@@ -4,6 +4,6 @@
 filter {
   sleep {
     time => "180"
-    every => 50001
+    every => 50000
   }
 }
