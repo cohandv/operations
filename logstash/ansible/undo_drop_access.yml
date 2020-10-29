@@ -1,0 +1,11 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: undo drop access logs
+    copy:
+      src: original-files/3-output-50-sumologic
+      dest: /usr/lib/buddy/logstash/app/conf.d/
+      owner: root
+      group: root
+      mode: 0644
+  - command: systemctl restart logstash-worker

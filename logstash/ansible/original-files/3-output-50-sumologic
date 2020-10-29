@@ -1,0 +1,16 @@
+output {
+  if "sumologic" in [tags] {
+    if [@metadata][sumo_source_category] =~ /.+/ {
+      sumologic {
+        url => "${LOGSTASH_OUTPUT_SUMOLOGIC_URL}"
+        format => "%{@timestamp} %{hostname} %{@json}"
+        source_category => "%{[@metadata][sumo_source_category]}"
+      }
+    } else {
+      sumologic {
+        url => "${LOGSTASH_OUTPUT_SUMOLOGIC_URL}"
+        format => "%{@timestamp} %{hostname} %{@json}"
+      }
+    }
+  }
+}
