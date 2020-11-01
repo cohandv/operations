@@ -1,4 +1,5 @@
 - hosts: all
+  serial: 1
   gather_facts: no
   tasks:
   - command: systemctl restart logstash-worker
