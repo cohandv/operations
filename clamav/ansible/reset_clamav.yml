@@ -1,0 +1,22 @@
+- hosts: all
+  serial: 1
+  gather_facts: no
+  tasks:
+  - name: Check current clamav
+    ansible.builtin.shell: |
+      rpm -qa|grep clamav
+    register: clamav_installed
+  - name: print value
+    debug: msg="{{clamav_installed.stdout_lines[0]}}"
+  - name: Try to fix clamav
+    block:
+      - name: Try to restart clamav
+        ansible.builtin.shell: systemctl restart clamd@scan.service
+    rescue:
+      - name: Remove existing clamav
+        ansible.builtin.shell: yum remove -y clamav clamav-filesystem clamav-update clamav-lib clamav-data
+      - name: Rerun puppet
+        ansible.builtin.shell: /opt/puppetlabs/bin/puppet agent -t
+        register: result
+        failed_when:
+          - result.rc < 2
