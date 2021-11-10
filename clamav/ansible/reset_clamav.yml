@@ -1,5 +1,5 @@
 - hosts: all
-  serial: 1
+  serial: 4
   gather_facts: no
   tasks:
   - name: Check current clamav
