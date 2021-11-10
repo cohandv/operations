@@ -1,5 +1,10 @@
 # Use this to ensure clamav is fixed
 
+## Dependencies
+* Jarvis
+* Jaws/Paws
+* Ansible
+
 ## Usage
 
 ```shell
