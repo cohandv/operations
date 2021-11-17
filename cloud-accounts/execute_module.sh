@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$#" -le 2 ]; then
+if [ "$#" -lt 2 ]; then
     echo "Help"
     echo "Run this command with an specific terraform module that you want to run, putting the token ACCOUNT where you need te script to replace files"
     echo "  ${0} [apply|plan] module.account-ACCOUNT-global.module.dms"
