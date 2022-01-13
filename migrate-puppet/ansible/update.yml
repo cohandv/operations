@@ -1,0 +1,9 @@
+  - debug: msg="using old puppet"
+  - name: update catalog
+    command: /opt/puppetlabs/bin/puppet config set --section agent server puppet-catalog
+  - name: update ca
+    command: /opt/puppetlabs/bin/puppet config set --section agent ca_server puppet-ca
+  - name: delete old certs
+    command: rm -rf /etc/puppetlabs/puppet/ssl
+
+#    debugger: always

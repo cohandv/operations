@@ -1,0 +1,21 @@
+- hosts: all
+  gather_facts: no
+  #strategy: linear
+  #serial:
+  #  - 1
+
+  tasks:
+  - name: get puppet conf for ca
+    command: /opt/puppetlabs/bin/puppet config print --section agent ca_server
+    register: ca_server
+
+  - debug: msg="using new puppet"
+    when: ca_server.stdout == "puppet-ca"
+
+  - include: update.yml
+    when: ca_server.stdout != "puppet-ca"
+
+  - name: generate new certs and run puppet
+    command: /opt/puppetlabs/bin/puppet agent -t
+    register: puppet_run
+    failed_when: puppet_run.rc != 2
