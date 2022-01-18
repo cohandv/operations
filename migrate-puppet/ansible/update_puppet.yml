@@ -13,7 +13,7 @@
     when: ca_server.stdout == "puppet-ca"
 
   - include: update.yml
-    when: ca_server.stdout != "puppet-ca"
+    # when: ca_server.stdout != "puppet-ca"
 
   - name: generate new certs and run puppet
     command: /opt/puppetlabs/bin/puppet agent -t

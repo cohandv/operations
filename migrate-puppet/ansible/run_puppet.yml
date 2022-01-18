@@ -2,6 +2,13 @@
   gather_facts: no
 
   tasks:
+  - name: ping test
+    command: ping puppet-ca -c 1 -W 1
+    register: ping_output
+    failed_when: ping_output.rc != 1
+
+  - debug: var=ping_output.stdout_lines[0]
+
   - name: run puppet
     command: /opt/puppetlabs/bin/puppet agent -t
     register: puppet_run
