@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+import re
+import sys
+import os
+
+NEW_TAG = 'account:purpose'
+file_path = os.path.relpath(sys.argv[1])
+
+with open(file_path, 'r') as f:
+    filetext = f.read()
+    result = re.search(r"aws_organizations_account\" \"(\b[a-z]+\b)", filetext)
+    # Extract match value of group 1
+    try:
+        brand = result.group(1)
+    except AttributeError:
+        print("No match")
+        f.close()
+        exit(1)
+    f.close()
+
+if filetext.find('tags = {') != -1:
+    newtext = filetext.replace('tags = {', f'tags = {{\n"{NEW_TAG}" = "{brand}"')
+    with open(file_path, 'w') as f:
+        f.write(newtext)
+        f.close()
+    os.system(f'terraform fmt -write=true {file_path}')
