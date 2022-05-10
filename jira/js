@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+
+which jira > /dev/null
+if [ "$?" != 0 ]
+then
+  echo "jira not present, please install"
+  npm install -g jira-cmd
+fi
+
+if echo $BRANCH_NAME | egrep -iq "feature|fix"
+then
+    BRANCH_NAME=$(echo $BRANCH_NAME|awk -F'/' '{print $2}')
+fi
+
+if [ "$#" -lt 1 ]
+then
+      jira show $BRANCH_NAME
+else
+      jira $1 $BRANCH_NAME
+fi
