@@ -1,0 +1,15 @@
+- hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Delete content & directory
+    file:
+      state: absent
+      path: /etc/yum.repos.d/datadog.repo
+    register: deletion
+
+  - name: run puppet
+    command: /opt/puppetlabs/bin/puppet agent -t
+    register: puppet_run
+    failed_when: puppet_run.rc != 2
+    when: deletion.changed
