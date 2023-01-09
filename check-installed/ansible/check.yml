@@ -1,0 +1,12 @@
+- hosts: all
+  gather_facts: no
+  #strategy: linear
+  #serial:
+  #  - 1
+
+  tasks:
+  - name: get installed packages
+    command: yum list --disablerepo * installed
+    register: package_list
+
+  - debug: var=package_list
