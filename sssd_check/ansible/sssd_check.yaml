@@ -1,0 +1,19 @@
+---
+- name: check sssd
+  hosts: all
+  gather_facts: no
+  vars:
+    myfile: "/etc/sssd/sssd.conf"
+    myline: 'ldap_uri=ldap://ldapcorp'
+  become: true
+  tasks:
+    - name: line found
+      ansible.builtin.lineinfile:
+        name: "{{ myfile }}"
+        line: "{{ myline }}"
+        state: present
+      check_mode: true
+      register: conf
+      failed_when: (conf is changed ) or ( conf is failed)
+
+
